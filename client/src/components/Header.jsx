@@ -35,7 +35,10 @@ const Header = () => {
       sx={{ paddingTop: { md: "50px", xs: "20px" } }}
     >
       {/*  Box text  */}
-      <BoxText component="section">
+      <BoxText
+        component="section"
+        sx={{ marginTop: { md: "0px", xs: "10vh" } }}
+      >
         <Typography
           variant="h2"
           component="h1"

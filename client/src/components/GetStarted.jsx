@@ -4,9 +4,9 @@ import { Box, styled, Typography, Stack, Button } from "@mui/material";
 import DiscreteSliderMarks from "./LinearBar";
 import HorizontalChat from "./Chat";
 const CustomBox = styled(Box)(({ theme }) => ({
-  height: "80vh",
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
   // tamanhos
   gap: theme.spacing(2),
   // cor de fundo
@@ -38,6 +38,8 @@ const Header = () => {
     <CustomBox
       component="header"
       sx={{
+        height: { md: "80vh", xs: "150vh" },
+
         marginTop: { md: "80px", xs: "70px" },
         marginBottom: "20px",
         background: "#004643",
@@ -77,7 +79,12 @@ const Header = () => {
           <HorizontalChat />
         </Box>
       </Box>
-      <BoxText component="section">
+      <BoxText
+        component="section"
+        sx={{
+          paddingBottom: "20px",
+        }}
+      >
         <Typography
           variant="h2"
           component="h1"
@@ -122,6 +129,7 @@ const Header = () => {
               borderColor: "#14192d",
               color: "#fff",
               backgroundColor: "#636564",
+              marginBottom: "20px",
             }}
           >
             Get Started
