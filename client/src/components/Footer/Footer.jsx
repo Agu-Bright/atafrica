@@ -39,21 +39,21 @@ const Footer = () => {
         <FooterTitle text={"address"} />
         <FooterLink text={"15th Louis St, london 92382, eng"} />
         <FooterLink text={"25 999-345-10800"} />
-        <FooterLink text={"info@housesales.com"} />
+        <FooterLink text={"info@autoinvest.com"} />
       </StackColumn>
 
       <StackColumn>
         <FooterTitle text={"our services"} />
-        <FooterLink text={"buy house"} />
-        <FooterLink text={"sell house"} />
+        <FooterLink text={"Career"} />
+        <FooterLink text={"Auto Invest foundation"} />
         <FooterLink text={"rent house"} />
         <FooterLink text={"build house"} />
       </StackColumn>
       <StackColumn>
         <FooterTitle text={"our company"} />
-        <FooterLink text={"reporting"} />
-        <FooterLink text={"get in touch"} />
-        <FooterLink text={"management"} />
+        <FooterLink text={"Accessibility"} />
+        <FooterLink text={"Privacy Ploicy"} />
+        <FooterLink text={"Terms of Use"} />
       </StackColumn>
 
       <StackColumn>
@@ -90,7 +90,7 @@ const Footer = () => {
           </Link>
         </Stack>
         <Typography variant="caption" component="p">
-          &copy; 2022 HBSales Inc.
+          &copy; 2024 AutoINVEST Inc.
         </Typography>
       </StackColumn>
     </BoxRow>

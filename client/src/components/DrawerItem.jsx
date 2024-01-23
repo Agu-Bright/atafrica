@@ -95,7 +95,6 @@ const DrawerItem = () => {
               <ListItem
                 key={text}
                 component={Link}
-                to={item.to}
                 sx={{
                   color: "#414141",
                   "&:hover": {

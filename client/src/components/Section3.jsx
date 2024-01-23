@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Grid, styled, Typography } from "@mui/material";
 import Title from "./Title";
 // img
-import imgDetail from "../assets/images/pexels-alex-staudinger-1732414.jpg";
+import imgDetail from "../assets/images/woman.avif";
 import imgDetail2 from "../assets/images/mike.jpg";
 
 const Section3 = () => {

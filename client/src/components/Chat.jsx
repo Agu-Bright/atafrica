@@ -1,22 +1,75 @@
-import React, { useState } from "react";
-import { ChatFeed, Message } from "react-chat-ui";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import { BarChart } from "@mui/x-charts/BarChart";
 
-const HorizontalChat = () => {
-  const [messages, setMessages] = useState([
-    new Message({ id: 1, message: "US-stock: 40%" }),
-    new Message({ id: 2, message: "Foreign Stock: 10%" }),
-    new Message({ id: 3, message: "Emerging Market: 20%" }),
-  ]);
+// // Example usage:
+// const riskScore = 50; // Replace with your actual risk score
+// const investmentPercentages = calculateInvestmentPercentages(riskScore);
+
+// // Display the result
+// for (const investment in investmentPercentages) {
+//   console.log(`${investment} Percentage:`, investmentPercentages[investment].toFixed(2) + "%");
+// }
+
+export default function BarAnimation({
+  usStock,
+  usBonds,
+  tips,
+  municipalStock,
+  foreignStock,
+  emergingStock,
+  dividendStock,
+  corporateBonds,
+}) {
+  const highlightScope = {
+    highlighted: "series",
+    faded: "global",
+  };
+
+  const series = [
+    {
+      label: "US Stock",
+      data: [usStock],
+    },
+    {
+      label: "Foreign Stock",
+      data: [foreignStock],
+    },
+    {
+      label: "Emerging Markets",
+      data: [emergingStock],
+    },
+    {
+      label: "Devidend Stock",
+      data: [dividendStock],
+    },
+    {
+      label: "Municipal Bonds",
+      data: [municipalStock],
+    },
+    {
+      label: "US Bonds",
+      data: [usBonds],
+    },
+    {
+      label: "Corporate Bonds",
+      data: [corporateBonds],
+    },
+    {
+      label: "Tips",
+      data: [tips],
+    },
+  ].map((s) => ({ ...s, highlightScope }));
 
   return (
-    <div>
-      <ChatFeed
-        messages={messages}
-        hasInputField={false}
-        bubbleStyles={{ text: { fontSize: 16 } }}
+    <Box sx={{ width: "100%" }}>
+      <BarChart
+        height={300}
+        series={series.slice(0, 8).map((s) => {
+          return { ...s, data: s.data.slice(0, 1) };
+        })}
+        skipAnimation={false}
       />
-    </div>
+    </Box>
   );
-};
-
-export default HorizontalChat;
+}

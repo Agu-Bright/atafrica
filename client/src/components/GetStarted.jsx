@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, styled, Typography, Stack, Button } from "@mui/material";
+import Slider from "@mui/material/Slider";
 
-import DiscreteSliderMarks from "./LinearBar";
-import HorizontalChat from "./Chat";
+import BarAnimation from "./Chat";
 const CustomBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
@@ -33,7 +33,30 @@ const BoxText = styled(Box)(({ theme }) => ({
   },
 }));
 
+const marks = [
+  {
+    value: 0,
+    label: "0",
+  },
+
+  {
+    value: 10,
+    label: "10",
+  },
+];
 const Header = () => {
+  const [riskScore, setRiskScore] = useState(8);
+  const [percentage, setPercentage] = useState();
+  percentage && console.log(percentage);
+
+  const valuetext = (value) => {
+    setRiskScore(value);
+    return `${value}`;
+  };
+  useEffect(() => {
+    const percentage = calculateInvestmentPercentages(riskScore);
+    setPercentage(percentage);
+  }, [riskScore]);
   return (
     <CustomBox
       component="header"
@@ -48,8 +71,9 @@ const Header = () => {
       <Box
         sx={{
           position: "relative",
+          borderBottomRightRadius: "20px",
           width: { md: "50%", xs: "100%" },
-          height: "100%",
+          height: { md: "80%", xs: "auto" },
           background: "#ededed",
         }}
       >
@@ -70,13 +94,45 @@ const Header = () => {
             justifyContent="space-between"
             sx={{ padding: "10px 10px" }}
           >
-            <Typography>Risk Score: 8.0</Typography>
+            <Typography>
+              <span style={{ fontWeight: "bolder" }}>Risk Score:</span>{" "}
+              {riskScore}
+            </Typography>
             <Typography>Example portfolio</Typography>
           </Stack>
-          <DiscreteSliderMarks />
+          <Box sx={{ padding: "0px 25px" }}>
+            <Slider
+              aria-label="Custom marks"
+              defaultValue={riskScore}
+              getAriaValueText={valuetext}
+              valueLabelDisplay="auto"
+              marks={marks}
+              min={0}
+              max={10}
+              sx={{ color: "#004643" }}
+            />
+          </Box>{" "}
         </Box>
-        <Box sx={{ marginTop: "100px", marginLeft: "20px" }}>
-          <HorizontalChat />
+        <Box
+          sx={{
+            width: "90%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "100px",
+            marginLeft: "20px",
+          }}
+        >
+          <BarAnimation
+            usStock={percentage?.usStock}
+            usBonds={percentage?.usBonds}
+            tips={percentage?.tips}
+            municipalStock={percentage?.municipalStock}
+            foreignStock={percentage?.foreignStock}
+            emergingStock={percentage?.emergingStock}
+            dividendStock={percentage?.dividendStock}
+            corporateBonds={percentage?.corporateBonds}
+          />
         </Box>
       </Box>
       <BoxText
@@ -141,3 +197,48 @@ const Header = () => {
 };
 
 export default Header;
+
+function calculateInvestmentPercentages(riskScore) {
+  // Coefficients for different investments
+  const coefficients = {
+    usStock: 0.4,
+    foreignStock: 0.3,
+    emergingStock: 0.2,
+    dividendStock: 0.1,
+    municipalStock: 0.05,
+    usBonds: 0.1,
+    corporateBonds: 0.08,
+    tips: 0.05,
+  };
+
+  // Intercepts for different investments
+  const intercepts = {
+    usStock: 10,
+    foreignStock: 5,
+    emergingStock: 2,
+    dividendStock: 1,
+    municipalStock: 0.5,
+    usBonds: 2,
+    corporateBonds: 1.5,
+    tips: 1,
+  };
+
+  // Calculate percentages for each investment
+  const percentages = {};
+  let totalPercentage = 0;
+
+  for (const investment in coefficients) {
+    percentages[investment] = Math.ceil(
+      coefficients[investment] * riskScore + intercepts[investment]
+    );
+    totalPercentage += percentages[investment];
+  }
+
+  // Normalize percentages to ensure they sum to 100%
+  const normalizationFactor = 100 / totalPercentage;
+
+  for (const investment in percentages) {
+    percentages[investment] *= normalizationFactor;
+  }
+  return percentages;
+}
